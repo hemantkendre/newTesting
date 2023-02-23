@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd">
+	<sub-flow name="brandSub_Flow" doc:id="21b3e68c-d76d-4032-b2c8-a46b02aaf84d" >
+		<logger level="INFO" doc:name="Logger" doc:id="859a573c-d628-467b-86ce-35796328b7f1" message="In Brand Sub Flow"/>
+		<db:select doc:name="Get Brand List" doc:id="e464c379-0127-4e60-bb7b-98d86162cff1" config-ref="DB_Config">
+			<db:sql ><![CDATA[select * from tbl_brand where DisplayStatus = 'Active']]></db:sql>
+		</db:select>
+		<logger level="INFO" doc:name="Logger" doc:id="0cd438d4-f821-429d-9d7c-149c9f1a6a6d" message="#[output application/json --- payload]"/>
+		<choice doc:name="ifRecordFound" doc:id="205498e1-95c2-44d1-9963-1dd7f6dbfb86" >
+			<when expression="#[sizeOf(payload)&gt;0]">
+				<ee:transform doc:name="Transform Message" doc:id="4725e958-1495-45ea-bdf2-efa353a5fd09">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+			</when>
+			<otherwise >
+				<ee:transform doc:name="Transform Message" doc:id="0a830186-20d0-40a2-9dab-a26f7e433a59" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"msg":"No Records Found"
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+			</otherwise>
+		</choice>
+	</sub-flow>
+</mule>
