@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<sub-flow name="getCategory" doc:id="20f0963e-742f-450d-b781-d4b120b16614" >
+		<db:select doc:name="getCategoryList" doc:id="d6b613e0-586c-408a-8731-6d47320210c4" config-ref="DB_Config">
+			<db:sql ><![CDATA[select * from tbl_category where CatDisplayStatus = 'Active']]></db:sql>
+		</db:select>
+	</sub-flow>
+</mule>

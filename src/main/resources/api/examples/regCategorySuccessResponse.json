@@ -1,0 +1,13 @@
+{
+  "response":  [{
+    "success" : "1",
+    "failure" : "0",
+    "msg" : "Categories found"
+  }],
+  "result" :[{
+    "id" : "1",
+    "catName" : "Shirts",
+    "catIcon" : "Actual Incon Path",
+    "catType" : "Mens Wear"
+  }]
+}

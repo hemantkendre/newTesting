@@ -1,0 +1,15 @@
+%dw 2.0
+
+type auto_a28c2420_2f0b_41ca_85aa_86a3abe7cad5_Output_Payload = {
+  userPassword: String, 
+  regTime: String, 
+  emailId: String, 
+  updateTime: String, 
+  displayStatus: String, 
+  mobileNo: String, 
+  userName: String, 
+  regType: String, 
+  token: String, 
+  _?: Any
+}
+

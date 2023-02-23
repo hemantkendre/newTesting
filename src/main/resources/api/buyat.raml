@@ -1,0 +1,217 @@
+#%RAML 1.0
+
+traits:
+  client-id-requried:
+    headers:
+      client_id:
+        type: string
+        required: true
+      client_secret:
+        type: string
+        required: true
+    responses:
+      401: 
+        description: Unauthorized or invalid client application credentials
+      500:
+        description: Bad response from authorization server, or WSDL SOAP Fault error 
+
+types:
+  regCategorySuccessResponse:
+    example: !include examples/regCategorySuccessResponse.json
+    type: any
+
+  regCategoryFailureResponse:
+    example: !include examples/regCategoryFailureResponse.json
+    type: any
+title: BuyAt
+
+/regCategoryList:
+  get:
+    is:
+      - client-id-requried
+    description: Client id is requried
+    responses:
+      200:
+        body:
+          application/json:
+            type: regCategorySuccessResponse
+      201:
+        body:
+          application/json:
+            type: regCategoryFailureResponse
+
+/BrandList:
+  get:
+    is:
+      - client-id-requried
+    description: Client id is requried
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              {
+                "response":[{
+                  "success" : "1",
+                  "failure" : "0",
+                  "msg" : "Brand found"
+                }],
+                "result":[{
+                "Id" : "1",
+                "BrandName" : "PUMA",
+                "BrandIcon" : "./Uplods/puma.jpg"
+                }],
+              }
+      201:
+        body:
+          application/json:
+            example:
+              {
+                "response":[{
+                  "success" : "0",
+                  "failure" : "1",
+                  "msg" : "No brand found"
+                }],
+              }
+
+/userRegistration:
+  post:
+    is:
+      - client-id-requried
+    description: Client id is requried
+    queryParameters:
+    body:
+      application/json:
+        properties:
+          userName:
+            required : true
+            type : string
+            minLength : 2
+          mobileNo:
+            required : true
+            minLength: 10
+          userPassword:
+            required : true
+            minLength : 8
+          emailId:
+            required : true
+          token:
+            required : true
+          regTime:
+            required : true
+          updateTime:
+            required : true
+          displayStatus:
+            required : true
+            type: string
+          regType:
+            required : true
+            type : string
+        example:
+          value: 
+            userName: "Hemant"
+            mobileNo: "9876543234"
+            userPassword: "Password!@#"
+            emailId: "hemant@gmail.com"
+            token: "Test!@#4567890"
+            regTime: "2022-05-08T00:00:00Z"
+            updateTime: "2022-05-08T00:00:00Z"
+            displayStatus: "Active"
+            regType: "End User"
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              {
+                "response":[{
+                  "success" : "1",
+                  "failure" : "0",
+                  "msg" : "Registration done successfully",
+                }]
+              }
+      201:
+        body:
+          application/json:
+            example:
+              {
+                "response":[{
+                  "success" : "0",
+                  "failure" : "1",
+                  "msg" : "Error Occurred, Plz try again",
+                }]
+              }
+  put:
+    is:
+      - client-id-requried
+    description: Client id is requried
+    body:
+      application/json:
+        properties:
+          userId:
+            required : true
+            minLength : 1
+          userName:
+            required : true
+            type : string
+            minLength : 2
+          mobileNo:
+            required : true
+            minLength: 10
+          userPassword:
+            required : true
+            minLength : 8
+          emailId:
+            required : true
+          token:
+            required : true
+          regTime:
+            required : true
+          updateTime:
+            required : true
+          displayStatus:
+            required : true
+            type: string
+          regType:
+            required : true
+            type : string
+        example:
+          value: 
+            userId: "1"
+            userName: "Hemant"
+            mobileNo: "9876543234"
+            userPassword: "Password!@#"
+            emailId: "hemant@gmail.com"
+            token: "Test!@#4567890"
+            regTime: "2022-05-08T00:00:00Z"
+            updateTime: "2022-05-08T00:00:00Z"
+            displayStatus: "Active"
+            regType: "End User"
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              {
+                "response":[{
+                  "success":"1",
+                  "failure":"0",
+                  "msg":"Record updated successfully"
+                }]
+              }
+      201:
+        body:
+          application/json:
+            example:
+              {
+                "response":[{
+                  "success":"0",
+                  "failure":"1",
+                  "msg":"Error Occurred, Please try again"
+                }]
+              }
+            
+          
+
+
+    
